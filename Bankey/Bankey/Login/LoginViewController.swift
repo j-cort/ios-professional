@@ -9,6 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    let myView = TitleView()
     let loginView = LoginView()
     let signInButton = UIButton(type: .system)
     let errorMessageLabel = UILabel()
@@ -31,6 +32,8 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     private func style() {
+        
+        myView.translatesAutoresizingMaskIntoConstraints = false
         loginView.translatesAutoresizingMaskIntoConstraints = false
         
         signInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +51,7 @@ extension LoginViewController {
     }
     
     private func layout() {
+        view.addSubview(myView)
         view.addSubview(loginView)
         view.addSubview(signInButton)
         view.addSubview(errorMessageLabel)
@@ -56,6 +60,12 @@ extension LoginViewController {
             loginView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             loginView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: loginView.trailingAnchor, multiplier: 1)
+        ])
+        
+        NSLayoutConstraint.activate([
+            loginView.topAnchor.constraint(equalToSystemSpacingBelow: myView.bottomAnchor, multiplier: 2),
+            myView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: myView.trailingAnchor, multiplier: 1)
         ])
         
         NSLayoutConstraint.activate([
@@ -96,8 +106,6 @@ extension LoginViewController {
         }
         
         configureView(with: "Incorrect username / password")
-        
-        
     }
     
     private func configureView(with message: String) {
