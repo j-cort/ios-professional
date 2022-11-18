@@ -7,7 +7,17 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate: AnyObject {
+    func didLogin()
+}
+
+protocol LogoutDelegate: AnyObject {
+    func didLogout()
+}
+
 class LoginViewController: UIViewController {
+    
+    weak var delegate: LoginViewControllerDelegate?
     
     let myView = TitleView()
     let loginView = LoginView()
@@ -26,6 +36,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         style()
         layout()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        signInButton.configuration?.showsActivityIndicator = false
     }
     
 }
@@ -99,9 +114,10 @@ extension LoginViewController {
             configureView(with: "Username / password cannot be blank")
             return
         }
-        // why is configuration optional??
-        if username == "Kevin" && password == "Welcome" {
+        
+        if username == "James" && password == "Welcome" {
             signInButton.configuration?.showsActivityIndicator = true
+            delegate?.didLogin()
             return
         }
         
